@@ -249,7 +249,7 @@ plugins:
         - aliases
       excludedProperties: []
       hidePropertiesView: false
-      delimiters: ---
+      delimiters: "---"
       language: yaml
     order: 5
     layout:
