@@ -1,12 +1,12 @@
-\---
+---
 
 title: Mathematics Stduy Notes
 
-\---
+---
 
 
 
-\# Mathematics Stduy Notes
+# Mathematics Stduy Notes
 
 
 

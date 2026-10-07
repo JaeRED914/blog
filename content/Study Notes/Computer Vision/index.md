@@ -1,12 +1,12 @@
-\---
+---
 
 title: Computer Vision Stduy Notes
 
-\---
+---
 
 
 
-\# Computer Vision Stduy Notes
+# Computer Vision Stduy Notes
 
 
 

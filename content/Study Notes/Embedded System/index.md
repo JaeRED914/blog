@@ -1,12 +1,12 @@
-\---
+---
 
 title: Embedded System Stduy Notes
 
-\---
+---
 
 
 
-\# Embedded System Stduy Notes
+# Embedded System Stduy Notes
 
 
 
