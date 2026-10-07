@@ -1,6 +1,6 @@
 ---
 
-title: Computer Vision Stduy Notes
+title: Computer Vision 
 
 ---
 
