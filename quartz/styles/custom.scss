@@ -1,3 +1,248 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+
+/* =========================================================
+   1. TOP BAR
+   ========================================================= */
+
+body::before {
+  content: "";
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 64px;
+  z-index: 9998;
+
+  background: var(--light);
+
+  /* 아래 구분선 */
+  border-bottom: 2px solid var(--lightgray);
+
+  /* 아주 약한 그림자 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
+  /*
+   * 중요:
+   * 이 가상요소가 돋보기 클릭을 가로채지 않도록 한다.
+   */
+  pointer-events: none;
+}
+
+
+/* 블로그 제목 */
+body::after {
+  content: "AI is All You Need";
+
+  position: fixed;
+  top: 0;
+  left: 20px;
+
+  height: 64px;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+
+  font-family: var(--headerFont);
+  font-size: 1.15rem;
+  font-weight: 700;
+
+  color: var(--dark);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   2. SEARCH
+   ========================================================= */
+
+/*
+ * Search 전체 구조는 절대 건드리지 않는다.
+ *
+ * display: contents;
+ * height: 0;
+ * position: fixed;
+ *
+ * 같은 설정을 .search 자체에 주면 안 된다.
+ */
+.sidebar.left .search {
+  display: block !important;
+  position: static !important;
+
+  width: 100% !important;
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: visible !important;
+}
+
+
+/*
+ * 원래 Search 버튼만 상단 오른쪽으로 이동
+ */
+.sidebar.left .search > .search-button {
+  position: fixed !important;
+
+  top: 12px;
+  right: 24px;
+
+  z-index: 10001;
+
+  width: 40px !important;
+  height: 40px !important;
+
+  margin: 0 !important;
+  padding: 8px !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent !important;
+  border: none !important;
+
+  cursor: pointer !important;
+
+  /* 클릭 확실히 허용 */
+  pointer-events: auto !important;
+}
+
+
+/* '검색' 글자 숨기기 */
+.sidebar.left .search > .search-button p {
+  display: none !important;
+}
+
+
+/* 돋보기 아이콘 */
+.sidebar.left .search > .search-button svg {
+  width: 22px;
+  height: 22px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   3. SEARCH MODAL
+   ========================================================= */
+
+/*
+ * Ctrl+K 했을 때 검색창이
+ * 단순히 허공에 떠 있는 것처럼 보이지 않도록.
+ */
+.search-container {
+  z-index: 20000 !important;
+}
+
+
+/* 검색창이 열린 상태 */
+.search-container.active {
+  background: rgba(0, 0, 0, 0.18) !important;
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+
+/*
+ * 검색 본체
+ */
+.search-container .search-space {
+  background: var(--light);
+
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+
+/* 검색 input */
+.search-container input {
+  background: var(--light) !important;
+}
+
+
+/* =========================================================
+   4. PAGE POSITION
+   ========================================================= */
+
+/*
+ * 여기 중요.
+ *
+ * 이전에 body에 16px padding을 더 줘서
+ * 사이트 전체가 아래로 내려가 있었음.
+ *
+ * 추가 여백 제거.
+ */
+body {
+  padding-top: 0 !important;
+}
+
+
+/* =========================================================
+   5. LEFT SIDEBAR DESCRIPTION
+   ========================================================= */
+
+.page-title {
+  margin-bottom: 0.2rem;
+}
+
+.page-title::after {
+  content: "LLM 그 이상을 바라보며";
+
+  display: block;
+
+  margin-top: 0.4rem;
+
+  font-family: var(--bodyFont);
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.45;
+
+  color: var(--gray);
+}
+
+
+/* =========================================================
+   6. MOBILE
+   ========================================================= */
+
+@media all and (max-width: 800px) {
+
+  body::before {
+    height: 56px;
+  }
+
+  body::after {
+    height: 56px;
+
+    left: 16px;
+
+    font-size: 0.95rem;
+  }
+
+  .sidebar.left .search > .search-button {
+    top: 8px;
+    right: 12px;
+  }
+
+  body {
+    padding-top: 0 !important;
+  }
+
+  .search-container .search-space {
+    width: calc(100% - 2rem);
+  }
+}

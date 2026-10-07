@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: JaeHong Park
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: en-US
+  locale: ko-KR
   baseUrl: jaered914.github.io/blog
   ignorePatterns:
     - private
@@ -72,7 +72,7 @@ plugins:
     order: 50
     layout:
       position: right
-      priority: 30
+      priority: 10
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
@@ -101,9 +101,9 @@ plugins:
   - source: "@quartz-community/quartz-fonts"
     enabled: true
   - source: "@quartz-themes/core"
-    enabled: false
+    enabled: true
     options:
-      theme: tokyo-night
+      theme: glass-scholar
       mode: both
   - source: "@quartz-community/remove-draft"
     enabled: true
@@ -147,26 +147,16 @@ plugins:
     enabled: true
   - source: "@quartz-community/tag-page"
     enabled: true
-  - source: "@quartz-community/explorer"
-    enabled: true
-    layout:
-      position: left
-      priority: 50
   - source: "@quartz-community/graph"
     enabled: true
     layout:
       position: right
-      priority: 10
-  - source: "@quartz-community/search"
-    enabled: true
-    layout:
-      position: left
-      priority: 20
-      group: toolbar
-      groupOptions:
-        grow: true
+      priority: 30
+
   - source: "@quartz-community/backlinks"
     enabled: true
+    options:
+      hideWhenEmpty: true
     layout:
       position: right
       priority: 50
@@ -181,7 +171,7 @@ plugins:
       position: beforeBody
       priority: 20
   - source: "@quartz-community/tag-list"
-    enabled: false
+    enabled: true
     layout:
       position: beforeBody
       priority: 30
@@ -220,8 +210,8 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        GitHub: https://github.com/JaeRED914
+        Profile: https://jaered914.github.io/
     layout:
       position: footer
       priority: 50
@@ -249,13 +239,31 @@ plugins:
         - aliases
       excludedProperties: []
       hidePropertiesView: false
-      delimiters: "---"
+      delimiters: ---
       language: yaml
     order: 5
     layout:
       position: beforeBody
       priority: 15
       display: all
+  - source: github:quartz-community/explorer
+    enabled: true
+    options:
+      title: Categories
+      folderDefaultState: collapsed
+      folderClickBehavior: link
+      useSavedState: true
+    order: 50
+    layout:
+      position: left
+      priority: 50
+  - source: github:quartz-community/search
+    enabled: true
+    options:
+      enablePreview: true
+    layout:
+      position: left
+      priority: 20
 layout:
   groups:
     toolbar:
