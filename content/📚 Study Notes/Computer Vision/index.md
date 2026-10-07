@@ -6,7 +6,7 @@ title: Computer Vision
 
 
 
-# Computer Vision Stduy Notes
+# Computer Vision 
 
 
 

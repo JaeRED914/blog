@@ -1,6 +1,5 @@
 ---
-title: Welcome to Quartz
+title: 환영합니다
 ---
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+논문 읽으며 정리/공부 할 겸 만든 블로그입니다. 제 블로그가 많은 도움이 되시길 바랍니다.

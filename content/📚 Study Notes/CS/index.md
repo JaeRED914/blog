@@ -1,12 +1,12 @@
 ---
 
-title: CS Stduy Notes
+title: CS 
 
 ---
 
 
 
-# CS Stduy Notes
+# CS 
 
 
 
