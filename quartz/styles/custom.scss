@@ -1,8 +1,24 @@
-@use "./variables.scss" as *;
+/* =========================================================
+   COLORS
+   ========================================================= */
+
+:root {
+  --pocari-blue: #005bb6;
+  --pocari-blue-hover: #00478f;
+}
 
 
 /* =========================================================
-   1. TOP BAR
+   GLOBAL
+   ========================================================= */
+
+body {
+  padding-top: 0 !important;
+}
+
+
+/* =========================================================
+   TOP BAR
    ========================================================= */
 
 body::before {
@@ -14,20 +30,15 @@ body::before {
   right: 0;
 
   height: 64px;
+
   z-index: 9998;
 
   background: var(--light);
 
-  /* 아래 구분선 */
   border-bottom: 2px solid var(--lightgray);
 
-  /* 아주 약한 그림자 */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 
-  /*
-   * 중요:
-   * 이 가상요소가 돋보기 클릭을 가로채지 않도록 한다.
-   */
   pointer-events: none;
 }
 
@@ -58,24 +69,21 @@ body::after {
 
 
 /* =========================================================
-   2. SEARCH
+   SEARCH BUTTON
+   Search는 toolbar와 별도 컴포넌트
    ========================================================= */
 
 /*
- * Search 전체 구조는 절대 건드리지 않는다.
- *
- * display: contents;
- * height: 0;
- * position: fixed;
- *
- * 같은 설정을 .search 자체에 주면 안 된다.
+ * 검색 컴포넌트의 원래 사이드바 공간 제거.
+ * search modal은 overflow visible로 계속 정상 동작.
  */
 .sidebar.left .search {
-  display: block !important;
   position: static !important;
 
   width: 100% !important;
-  height: auto !important;
+
+  height: 0 !important;
+  min-height: 0 !important;
 
   margin: 0 !important;
   padding: 0 !important;
@@ -84,16 +92,14 @@ body::after {
 }
 
 
-/*
- * 원래 Search 버튼만 상단 오른쪽으로 이동
- */
+/* 돋보기만 상단 오른쪽으로 */
 .sidebar.left .search > .search-button {
   position: fixed !important;
 
-  top: 12px;
-  right: 24px;
+  top: 12px !important;
+  right: 24px !important;
 
-  z-index: 10001;
+  z-index: 10020 !important;
 
   width: 40px !important;
   height: 40px !important;
@@ -102,105 +108,117 @@ body::after {
   padding: 8px !important;
 
   display: flex !important;
-  align-items: center;
-  justify-content: center;
+  align-items: center !important;
+  justify-content: center !important;
 
   background: transparent !important;
   border: none !important;
 
+  color: var(--dark) !important;
+
   cursor: pointer !important;
 
-  /* 클릭 확실히 허용 */
   pointer-events: auto !important;
 }
 
 
-/* '검색' 글자 숨기기 */
 .sidebar.left .search > .search-button p {
   display: none !important;
 }
 
 
-/* 돋보기 아이콘 */
 .sidebar.left .search > .search-button svg {
-  width: 22px;
-  height: 22px;
+  width: 22px !important;
+  height: 22px !important;
 
-  pointer-events: none;
+  pointer-events: none !important;
 }
 
 
 /* =========================================================
-   3. SEARCH MODAL
+   DARK MODE + READER MODE TOOLBAR
    ========================================================= */
 
 /*
- * Ctrl+K 했을 때 검색창이
- * 단순히 허공에 떠 있는 것처럼 보이지 않도록.
+ * 중요:
+ *
+ * 실제 HTML은
+ *
+ * <div class="flex-component">
+ *   <div>
+ *     <button class="darkmode">...</button>
+ *   </div>
+ *   <div>
+ *     <button class="readermode">...</button>
+ *   </div>
+ * </div>
+ *
+ * 따라서 flex-component 전체만 fixed로 이동한다.
+ *
+ * darkmode / readermode 버튼과 SVG 자체는
+ * Quartz 플러그인의 원래 CSS에 100% 맡긴다.
  */
-.search-container {
-  z-index: 20000 !important;
+
+.sidebar.left .flex-component:has(> div > button.darkmode) {
+  position: fixed !important;
+
+  top: 16px !important;
+  right: 76px !important;
+
+  z-index: 10020 !important;
+
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  gap: 14px !important;
+
+  overflow: visible !important;
 }
 
 
-/* 검색창이 열린 상태 */
-.search-container.active {
-  background: rgba(0, 0, 0, 0.18) !important;
+/* wrapper에 불필요한 여백만 제거 */
+.sidebar.left
+  .flex-component:has(> div > button.darkmode)
+  > div {
+  margin: 0 !important;
+  padding: 0 !important;
 
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  width: auto !important;
+  height: auto !important;
+
+  overflow: visible !important;
 }
 
 
 /*
- * 검색 본체
+ * 아래 요소들은 절대 커스텀하지 않는다:
+ *
+ * .darkmode
+ * .readermode
+ * .dayIcon
+ * .nightIcon
+ * .readerIcon
+ *
+ * 크기 / 위치 / display / fill / stroke / overflow를
+ * 원래 플러그인 CSS가 처리함.
  */
-.search-container .search-space {
-  background: var(--light);
-
-  border: 1px solid var(--lightgray);
-  border-radius: 12px;
-
-  padding: 1rem;
-
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.12);
-}
-
-
-/* 검색 input */
-.search-container input {
-  background: var(--light) !important;
-}
 
 
 /* =========================================================
-   4. PAGE POSITION
-   ========================================================= */
-
-/*
- * 여기 중요.
- *
- * 이전에 body에 16px padding을 더 줘서
- * 사이트 전체가 아래로 내려가 있었음.
- *
- * 추가 여백 제거.
- */
-body {
-  padding-top: 0 !important;
-}
-
-
-/* =========================================================
-   5. LEFT SIDEBAR DESCRIPTION
+   PROFILE
    ========================================================= */
 
 .page-title {
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.2rem !important;
 }
 
+
 .page-title::after {
-  content: "LLM 그 이상을 바라보며";
+  content: "LLM보다 더 높은 곳을 바라보며";
 
   display: block;
 
@@ -209,6 +227,7 @@ body {
   font-family: var(--bodyFont);
   font-size: 0.82rem;
   font-weight: 400;
+
   line-height: 1.45;
 
   color: var(--gray);
@@ -216,7 +235,427 @@ body {
 
 
 /* =========================================================
-   6. MOBILE
+   PROFILE LINKS
+   ========================================================= */
+
+.sidebar.left footer {
+  margin: 0.8rem 0 0.8rem 0 !important;
+  padding: 0 !important;
+
+  border: none !important;
+
+  font-size: 0.92rem !important;
+}
+
+
+/* Quartz 기본 footer 문구 숨김 */
+.sidebar.left footer > p {
+  display: none !important;
+}
+
+
+.sidebar.left footer ul {
+  display: flex !important;
+  flex-direction: column !important;
+
+  gap: 0.55rem !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  list-style: none !important;
+}
+
+
+.sidebar.left footer li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+.sidebar.left footer a {
+  display: inline-flex !important;
+  align-items: center !important;
+
+  gap: 0.55rem;
+
+  width: fit-content;
+
+  color: var(--gray) !important;
+
+  font-size: 0.92rem !important;
+  font-weight: 400 !important;
+
+  text-decoration: none !important;
+}
+
+
+.sidebar.left footer a:hover {
+  color: var(--pocari-blue) !important;
+}
+
+
+
+
+
+/* 링크 아이콘 공통 */
+.sidebar.left footer a::before {
+  content: "";
+
+  display: block;
+
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 18px;
+
+  background-color: transparent;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+
+/* GitHub */
+.sidebar.left footer a[href*="github.com"]::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236b6b6b'%3E%3Cpath d='M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.25 9.28 7.76 10.78.57.1.78-.25.78-.55v-2.16c-3.16.69-3.82-1.34-3.82-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.61 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.44.11-3 0 0 .95-.3 3.11 1.16A10.8 10.8 0 0 1 12 5.81c.96 0 1.93.13 2.83.38 2.16-1.46 3.11-1.16 3.11-1.16.62 1.56.23 2.71.11 3 .73.79 1.17 1.8 1.17 3.04 0 4.36-2.66 5.32-5.19 5.6.41.35.77 1.04.77 2.1v3.11c0 .3.2.66.78.55a11.26 11.26 0 0 0 7.67-10.68C23.25 5.48 18.27.5 12 .5Z'/%3E%3C/svg%3E");
+}
+
+
+/* Email */
+.sidebar.left footer a[href^="mailto:"]::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b6b6b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   EXPLORER / CATEGORIES
+   ========================================================= */
+
+/*
+ * Search는 height: 0,
+ * toolbar는 fixed.
+ *
+ * 따라서 둘이 원래 차지하던 공간은 없어지고
+ * Categories가 위로 붙는다.
+ */
+.sidebar.left .explorer {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+
+.sidebar.left .explorer h2,
+.sidebar.left .explorer h3 {
+  margin-top: 0 !important;
+}
+
+
+.sidebar.left .explorer a {
+  color: var(--darkgray) !important;
+}
+
+
+.sidebar.left .explorer a:hover {
+  color: var(--pocari-blue) !important;
+}
+
+
+/* =========================================================
+   LINK POPOVER
+   ========================================================= */
+
+.popover,
+.popover > .popover-inner,
+.popover .popover-inner {
+  opacity: 1 !important;
+}
+
+
+.popover > .popover-inner,
+.popover .popover-inner {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 12px !important;
+
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18) !important;
+}
+
+
+.popover .popover-inner article,
+.popover .popover-inner .popover-hint,
+.popover .popover-inner .popover-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+}
+
+
+html[saved-theme="dark"] .popover > .popover-inner,
+html[saved-theme="dark"] .popover .popover-inner,
+html[saved-theme="dark"] .popover .popover-inner article,
+html[saved-theme="dark"] .popover .popover-inner .popover-content {
+  background: #1b1b1d !important;
+  background-color: #1b1b1d !important;
+}
+
+
+/* =========================================================
+   SEARCH MODAL
+   ========================================================= */
+
+.search-container {
+  z-index: 20000 !important;
+}
+
+
+.search-container.active {
+  background: rgba(0, 0, 0, 0.28) !important;
+
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
+}
+
+
+.search-container .search-space,
+.search-space {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.18) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+
+.search-space .search-layout,
+.search-space .search-bar,
+.search-space .results-container,
+.search-space .preview-container,
+.search-space .result-card,
+.search-space input {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+}
+
+
+html[saved-theme="dark"] .search-container .search-space,
+html[saved-theme="dark"] .search-space,
+html[saved-theme="dark"] .search-space .search-layout,
+html[saved-theme="dark"] .search-space .search-bar,
+html[saved-theme="dark"] .search-space .results-container,
+html[saved-theme="dark"] .search-space .preview-container,
+html[saved-theme="dark"] .search-space .result-card,
+html[saved-theme="dark"] .search-space input {
+  background: #1b1b1d !important;
+  background-color: #1b1b1d !important;
+}
+
+
+/* =========================================================
+   POST LIST
+   ========================================================= */
+
+ul.section-ul {
+  list-style: none !important;
+
+  padding: 0 !important;
+
+  margin: 1.2rem 0 0 0 !important;
+}
+
+
+li.section-li {
+  margin: 0 !important;
+
+  padding: 1.15rem 0 1.4rem 0 !important;
+
+  border-bottom: 1px solid var(--lightgray);
+}
+
+
+li.section-li > .section {
+  display: flex !important;
+  flex-direction: column !important;
+
+  gap: 0 !important;
+}
+
+
+/* 제목 */
+li.section-li > .section > .desc {
+  order: 1 !important;
+}
+
+
+/* 날짜 */
+li.section-li > .section > .meta {
+  order: 2 !important;
+
+  margin: 0.35rem 0 0.45rem 0 !important;
+}
+
+
+/* Tags */
+li.section-li > .section > .tags {
+  order: 3 !important;
+}
+
+
+/* =========================================================
+   POST TITLE
+   ========================================================= */
+
+li.section-li .desc h2,
+li.section-li .desc h3 {
+  margin: 0 !important;
+
+  font-size: 1.25rem !important;
+  line-height: 1.35 !important;
+
+  font-weight: 700 !important;
+}
+
+
+li.section-li .desc h2 a,
+li.section-li .desc h3 a,
+li.section-li .desc a.internal {
+  color: var(--pocari-blue) !important;
+
+  background: transparent !important;
+
+  text-decoration: none !important;
+
+  font-weight: 700 !important;
+}
+
+
+li.section-li .desc h2 a:hover,
+li.section-li .desc h3 a:hover,
+li.section-li .desc a.internal:hover {
+  color: var(--pocari-blue-hover) !important;
+}
+
+
+/* =========================================================
+   POST DATE
+   ========================================================= */
+
+li.section-li .meta {
+  color: var(--gray) !important;
+
+  font-size: 0.88rem !important;
+  font-weight: 400 !important;
+}
+
+
+/*
+ * 예전에 우리가 추가했던 달력 pseudo icon 제거.
+ * 원래 출력되는 아이콘만 유지.
+ */
+li.section-li .meta::before,
+.page-listing time::before,
+.recent-notes time::before {
+  content: none !important;
+
+  display: none !important;
+}
+
+
+/* =========================================================
+   TAGS
+   ========================================================= */
+
+li.section-li .tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  gap: 0.4rem !important;
+
+  justify-content: flex-start !important;
+
+  margin: 0.2rem 0 0 0 !important;
+  padding: 0 !important;
+}
+
+
+li.section-li .tags li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+li.section-li .tags a {
+  display: inline-block !important;
+
+  padding: 0.25rem 0.62rem !important;
+
+  border: 1px solid var(--lightgray) !important;
+  border-radius: 6px !important;
+
+  background: var(--light) !important;
+
+  color: var(--darkgray) !important;
+
+  font-size: 0.82rem !important;
+  font-weight: 400 !important;
+
+  text-decoration: none !important;
+}
+
+
+li.section-li .tags a:hover {
+  color: var(--pocari-blue) !important;
+
+  border-color: var(--pocari-blue) !important;
+}
+
+
+/* =========================================================
+   GENERAL LINKS
+   ========================================================= */
+
+article a:not(.tag-link),
+.center a:not(.tag-link) {
+  color: var(--pocari-blue);
+}
+
+
+article a:not(.tag-link):hover,
+.center a:not(.tag-link):hover {
+  color: var(--pocari-blue-hover);
+}
+
+
+/* =========================================================
+   GISCUS
+   ========================================================= */
+
+.giscus {
+  background: var(--light) !important;
+  background-color: var(--light) !important;
+}
+
+
+/* =========================================================
+   MOBILE
    ========================================================= */
 
 @media all and (max-width: 800px) {
@@ -224,6 +663,7 @@ body {
   body::before {
     height: 56px;
   }
+
 
   body::after {
     height: 56px;
@@ -233,16 +673,30 @@ body {
     font-size: 0.95rem;
   }
 
+
+  /* Search */
   .sidebar.left .search > .search-button {
-    top: 8px;
-    right: 12px;
+    top: 8px !important;
+    right: 12px !important;
+
+    width: 36px !important;
+    height: 36px !important;
+
+    padding: 7px !important;
   }
 
-  body {
-    padding-top: 0 !important;
+
+  /* Dark + Reader toolbar */
+  .sidebar.left .flex-component:has(> div > button.darkmode) {
+    top: 10px !important;
+    right: 60px !important;
+
+    gap: 10px !important;
   }
 
-  .search-container .search-space {
-    width: calc(100% - 2rem);
+
+  li.section-li .desc h2,
+  li.section-li .desc h3 {
+    font-size: 1.15rem !important;
   }
 }

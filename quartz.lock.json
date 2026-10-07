@@ -1,6 +1,12 @@
 {
   "version": "1.0.0",
   "plugins": {
+    "comments": {
+      "source": "github:quartz-community/comments",
+      "resolved": "https://github.com/quartz-community/comments.git",
+      "commit": "f8e2588f94f008761c1f67d28b1e19e8bd057408",
+      "installedAt": "2026-10-07T16:12:31.170Z"
+    },
     "explorer": {
       "source": "github:quartz-community/explorer",
       "resolved": "https://github.com/quartz-community/explorer.git",
