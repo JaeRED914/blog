@@ -40,6 +40,10 @@ jobs:
       - name: Build Quartz
         run: npx quartz build
 
+      - name: Inspect home page assets
+        run: |
+          python3 -c 'import re,pathlib; p=pathlib.Path("public/index.html"); s=p.read_text(); print("HOME_ASSETS", re.findall(r"(?:href|src)=\\\"([^\\\"]+)\\\"", s)[:30]); print("ROOT_FILES", [x.name for x in pathlib.Path("public").iterdir() if x.suffix in (".css", ".js")]); print("HOME_LINK", re.findall(r"<a[^>]*site-home[^>]*>", s))'
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
 
