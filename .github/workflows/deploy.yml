@@ -42,7 +42,7 @@ jobs:
 
       - name: Inspect home page assets
         run: |
-          python3 -c 'import re,pathlib; p=pathlib.Path("public/index.html"); s=p.read_text(); print("HOME_ASSETS", re.findall(r"(?:href|src)=\\\"([^\\\"]+)\\\"", s)[:30]); print("ROOT_FILES", [x.name for x in pathlib.Path("public").iterdir() if x.suffix in (".css", ".js")]); print("HOME_LINK", re.findall(r"<a[^>]*site-home[^>]*>", s))'
+          python3 -c 'import pathlib; s=pathlib.Path("public/index.html").read_text(); print("HOME_HTML", s[:5000])'
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
