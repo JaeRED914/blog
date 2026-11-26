@@ -212,6 +212,19 @@ body::after {
    PROFILE
    ========================================================= */
 
+/* Keep the table-of-contents toggle visible when its list is collapsed. */
+.sidebar.right .toc:has(> .toc-header.collapsed) {
+  flex: 0 0 auto;
+}
+
+.sidebar.right .toc > .toc-header {
+  flex: 0 0 auto;
+}
+
+.sidebar.right .toc > .toc-content.collapsed {
+  display: none;
+}
+
 .page-title {
   margin-bottom: 0.2rem !important;
 }

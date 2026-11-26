@@ -11,7 +11,7 @@ const isElement = (target: EventTarget | null): target is Element =>
 const isLocalUrl = (href: string) => {
   try {
     const url = new URL(href)
-    if (window.location.origin === url.origin) {
+    if (window.location.origin === url.origin && url.pathname !== "/") {
       return true
     }
   } catch (e) {}
