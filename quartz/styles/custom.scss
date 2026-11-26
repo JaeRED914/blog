@@ -509,9 +509,7 @@ li.section-li > .section {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) 96px;
   grid-template-rows: auto auto 1fr;
-  column-gap: 1rem !important;
-
-  gap: 0 !important;
+  gap: 0 1rem !important;
 }
 
 li.section-li .post-thumbnail {
