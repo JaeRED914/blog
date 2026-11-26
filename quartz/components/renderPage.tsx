@@ -347,7 +347,7 @@ export function renderPage(
     <html lang={lang} dir={direction}>
       <Head {...componentData} />
       <body data-slug={slug} data-basepath={basePath}>
-        <a class="site-home" href={`${basePath}/`}>AI is All You Need</a>
+        <a class="site-home" href={`${basePath}/index.html`}>AI is All You Need</a>
         {frame.css && <style dangerouslySetInnerHTML={{ __html: frame.css }} />}
         <div id="quartz-root" class="page" data-frame={frame.name}>
           <Body {...componentData}>

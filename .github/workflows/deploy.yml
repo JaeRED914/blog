@@ -40,10 +40,6 @@ jobs:
       - name: Build Quartz
         run: npx quartz build
 
-      - name: Inspect home page assets
-        run: |
-          python3 -c 'import pathlib; s=pathlib.Path("public/index.html").read_text(); print("HOME_HTML", s[:5000])'
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
 
