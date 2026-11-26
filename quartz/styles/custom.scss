@@ -44,8 +44,7 @@ body::before {
 
 
 /* 블로그 제목 */
-body::after {
-  content: "AI is All You Need";
+.site-home {
 
   position: fixed;
   top: 0;
@@ -64,7 +63,7 @@ body::after {
 
   color: var(--dark);
 
-  pointer-events: none;
+  text-decoration: none;
 }
 
 
@@ -678,7 +677,7 @@ article a:not(.tag-link):hover,
   }
 
 
-  body::after {
+  .site-home {
     height: 56px;
 
     left: 16px;
