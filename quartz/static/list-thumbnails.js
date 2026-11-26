@@ -43,4 +43,27 @@
   }
 
   document.querySelectorAll(".page-listing .section-li").forEach(addThumbnail)
+
+  // The explorer creates its tree asynchronously from the content index.
+  document.querySelectorAll(".explorer").forEach((explorer) => {
+    let pending = false
+    const updateCounts = () => {
+      pending = false
+      explorer.querySelectorAll(".folder-container").forEach((folder) => {
+        const title = folder.querySelector(".folder-title")
+        const children = folder.nextElementSibling
+        if (title && children?.classList.contains("folder-outer")) {
+          title.dataset.count = String(children.querySelectorAll("a.nav-file-title").length)
+        }
+      })
+    }
+    const observer = new MutationObserver(() => {
+      if (!pending) {
+        pending = true
+        requestAnimationFrame(updateCounts)
+      }
+    })
+    observer.observe(explorer, { childList: true, subtree: true })
+    updateCounts()
+  })
 })()

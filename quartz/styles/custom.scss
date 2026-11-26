@@ -377,6 +377,12 @@ body::before {
   color: var(--pocari-blue) !important;
 }
 
+.sidebar.left .explorer .folder-title[data-count]::after {
+  content: " (" attr(data-count) ")";
+  color: var(--gray);
+  font-weight: 400;
+}
+
 
 /* =========================================================
    LINK POPOVER
