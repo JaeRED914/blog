@@ -348,7 +348,7 @@ export function renderPage(
       <Head {...componentData} />
       <body data-slug={slug} data-basepath={basePath}>
         <a class="site-home" href={`${basePath}/index.html`}>AI is All You Need</a>
-        <script defer src={`${basePath}/static/list-thumbnails.js`}></script>
+        <script defer src={`${basePath}/static/list-thumbnails.js?v=2`}></script>
         {frame.css && <style dangerouslySetInnerHTML={{ __html: frame.css }} />}
         <div id="quartz-root" class="page" data-frame={frame.name}>
           <Body {...componentData}>
