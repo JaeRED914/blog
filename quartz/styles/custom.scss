@@ -52,7 +52,7 @@ body::before {
 
   height: 64px;
 
-  z-index: 9999;
+  z-index: 2147483647;
 
   display: flex;
   align-items: center;
@@ -64,6 +64,8 @@ body::before {
   color: var(--dark);
 
   text-decoration: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 
