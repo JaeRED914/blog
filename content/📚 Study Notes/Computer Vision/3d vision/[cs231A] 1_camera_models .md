@@ -20,16 +20,16 @@ tags : 3d vision, cs231A, Camera Models
 
 ## Pinhole cameras
 
-![pinhole camera 구조](images\001.png)
+![pinhole camera 구조](images/001.png)
 pinhole camera는 빛이 여러 방향으로 오는 것을 barrier로 막고 **Aperture** 라는 작은 구멍으로만 빛이 들어오게 하여 물체의 각 점을 이미지 상의 특정 점에 대응 시켜 선명도를 늘인다. 
 
 또한 빛이 구멍에서 교차하므로 실제 카메라 내부에 형성되는 이미지는 상하좌우가 뒤집히게 된다.
 
-![pinhole camera 구조2](images\002.png)
+![pinhole camera 구조2](images/002.png)
 구조를 보기 편하게 바꾸면 위와 같이 직관적으로 생각 할 수 있다.
 여기서 $\mathbf o$는 **camera center(카메라 중심)** , $\mathbf f$는 **focal length(초점거리)** 라고한다.
 
-![pinhole camera 구조3](images\003.png)
+![pinhole camera 구조3](images/003.png)
 수식으로 나타내기 편하게 위 그림처럼 나타낼 수 있다.
 
 상이 맺히는 이미지 평면을 $\mathbf \Pi'$이라 하고 3차원 공간의 한 점 $P = \begin{bmatrix} x\\y\\ z \end{bmatrix}$가 이미지 평면 $\mathbf \Pi'$ 위에 $P' = \begin{bmatrix} x'\\ y'\end{bmatrix}$에 대응된다고 하면 **삼각형의 닮음 규칙**에 의해 $\dfrac {x'}f = \dfrac xz$가 된다.\
@@ -54,7 +54,7 @@ pinhole camera는 빛이 여러 방향으로 오는 것을 barrier로 막고 **A
 
 렌즈를 통해 들어온 빛이 이미지 상에 제대로 모여야 한다. 그렇지 않으면 Out of focus가 일어날 수 있다. 그래서 **"in focus"** 가 되기 위한 특정한 거리가 있다. 이걸 맞추는 것을 우리는 흔히 일상적으로 **초점을 맞춘다** 라고 하는 것이다.
 
-![Paraxial refraction model](images\004.png)
+![Paraxial refraction model](images/004.png)
 
 렌즈를 이용한 구조는 위 사진과 같이 나타낼 수 있다. 
 
@@ -102,17 +102,17 @@ $\alpha, \beta$의 크기가 다를 수 있는 이유는 픽셀이 **Non-square*
 컴퓨터 비전에서는 행렬로써 식들을 다루기에 이는 매우 불편하다. \
 그래서 이를 해결하기 위해 나온 방법이 **Homogeneous coordinates(동차좌표)** 이다.
 
-![Homogeneous coordinates](images\005.png)
+![Homogeneous coordinates](images/005.png)
 
 Homogeneous coordinates의 표기는 다음 사진과 같다. \
 E는 유클리드 좌표고 H는 Homogeneous 좌표이다.
 
 동차좌표의 마지막 좌표를 다른 좌표들에 나누면 그것이 유클리드 좌표가 된다.
 
-![Homogeneous coordinates 2](images\006.png)
+![Homogeneous coordinates 2](images/006.png)
 이 방법으로 전의 식을 다음과 같이 나타낼 수 있고
 
-![Homogeneous coordinates 3](images\007.png)
+![Homogeneous coordinates 3](images/007.png)
 이를 더 단순히 나타내면 다음과 같이 나타낼 수 있게 된다.
 
 여기서 $K$를 internal camera parameter라 한다. 이는 이 파라미터들이 카메라의 내부에 의해 결정되기 때문이다.
@@ -124,17 +124,17 @@ E는 유클리드 좌표고 H는 Homogeneous 좌표이다.
 먼저 2D에서의 변환을 먼저 보자.
 
 ### 1. Translation (평행이동)
-![2d translation](images\008.png)
+![2d translation](images/008.png)
 
 $P' = TP$ 로 나타낼 수 있다.
 
 ### 2. Scaling (크기 변환)
-![2d scaling](images\009.png)
+![2d scaling](images/009.png)
 
 $P' = SP$ 로 나타낼 수 있다.
 
 ### 3. Rotation (회전)
-![2d rotation](images\010.png)
+![2d rotation](images/010.png)
 
 **rotation matrix**를 통해 $P' = RP$로 나타낼 수 있다.
 
@@ -166,25 +166,25 @@ $P'=TRSP$
 
 행렬곱은 교환법칙이 성립되지 않으므로 **반드시 순서에 맞게** 해야 한다.
 
-![2d 변환](images\011.png)
+![2d 변환](images/011.png)
 
 위 사진과 같이 동차좌표로도 표현이 가능하다.
 
 이제 **3D**를 보자.
 
 ### 1. translation
-![3d 이동](images\012.png)
+![3d 이동](images/012.png)
 
 2d와 별 차이가 없다는 것을 알 수 있다.
 
 ### 2. Rotation
-![3d 회전](images\013.png)
+![3d 회전](images/013.png)
 
 회전은 조금 복잡해 졌다. 2d와 달리 각 축에 대해 고정을 한 회전각도를 총 3개 고려해야 하기 때문이다. 
 
 마찬가지로 행렬곱은 교환법칙이 성립하지 않기 때문에 반드시 순서에 맞게 계산을 해야 한다.
 
-![3d 변환](images\014.png)
+![3d 변환](images/014.png)
 
 위 두 식을 합쳐 다음과 같이 표현 가능하다. 그리고 이 **R, T**를 **External Camera Parameter**라 한다.
 
@@ -198,13 +198,13 @@ $P'=TRSP$
 
 이 과정을 거쳐서 3d 공간 좌표를 2d 이미지 평면의 좌표로 변환시킨다.
 
-![camera parameter](images\015.png)
-![camera parameter 2](images\016.png)
+![camera parameter](images/015.png)
+![camera parameter 2](images/016.png)
 이 과정을 하나의 식으로 표현 하면 위 사진들과 같다.
 
 $M$을 **Camera Parameter**라 하고 **Internal parameter, External parameter**를 요약한 것이다.
 
-![camera parameter 3](images\017.png)
+![camera parameter 3](images/017.png)
 
 그리고 $M$을 저렇게 행마다 벡터로 나눠서 다음과 같이 유클리드 좌표로 간단히 나타낼 수도 있다.
 
